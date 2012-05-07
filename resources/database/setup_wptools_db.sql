@@ -3,3 +3,5 @@ INSERT INTO version (resource, version) VALUES ('database', '0.1');
 
 CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR, password VARCHAR);
 INSERT INTO users (username, password) VALUES ('admin', 'admin');
+
+CREATE TABLE wpsites (id INTEGER PRIMARY KEY AUTOINCREMENT, url VARCHAR, username VARCHAR, password VARCHAR);
