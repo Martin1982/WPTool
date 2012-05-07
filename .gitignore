@@ -5,3 +5,4 @@ demos/
 extras/documentation
 .idea
 .DS_Store
+wptool.sqlite
