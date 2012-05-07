@@ -5,6 +5,8 @@ class Dreamworx_Db_Script
 
     /**
      * Run a database script
+     * @todo make a check that the ; is not within a string
+     * @todo ignore comments in queries
      *
      * @static
      * @param $script String representation of the script
@@ -12,10 +14,21 @@ class Dreamworx_Db_Script
      */
     static function run($script, Zend_Db_Adapter_Abstract $dbAdapter)
     {
-        throw new Exception('Not yet implemented');
-        // read the script untill the next ;
+        $queries = explode(';', $script);
 
-        // execute command
+        $dbAdapter->query("BEGIN TRANSACTION;");
+
+        // execute commands
+        foreach ($queries as $query) {
+            try {
+                $dbAdapter->query($query);
+            } catch (Exception $e) {
+                $dbAdapter->query("ROLLBACK TRANSACTION;");
+                throw new Exception($e->getMessage() . "Transaction rolled back at: $query.");
+            }
+        }
+
+        $dbAdapter->query("COMMIT");
 
        return true;
     }
