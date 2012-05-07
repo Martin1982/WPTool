@@ -11,9 +11,9 @@ Requirements:
 * One or more worpress blogs you have access to
 
 Roadmap:
-* Setup an application
-* Open or create a database connection
-* Create user login
+* ~~Setup an application~~
+* ~~Open or create a database connection~~
+* ~~Create user login~~
 * CRUD Wordpress site accesses
 * Connect to Wordpress sites
 * List connected sites with their status
