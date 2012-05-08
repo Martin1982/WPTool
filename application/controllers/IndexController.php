@@ -1,16 +1,7 @@
 <?php
-
-class IndexController extends Zend_Controller_Action
+require_once ('BaseController.php');
+class IndexController extends BaseController
 {
-
-    public function init()
-    {
-        $auth = Zend_Auth::getInstance();
-        if (!$auth->hasIdentity()) {
-            $this->_redirect('/login/');
-        }
-    }
-
     public function indexAction()
     {
         $auth = Zend_Auth::getInstance();

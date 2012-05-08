@@ -1,0 +1,23 @@
+<p><a href="/sites/add">Add a new site</a></p>
+
+<table>
+    <thead>
+        <tr>
+            <td>&nbsp;</td>
+            <td>Site URL</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!count($this->sites)): ?>
+            <tr>
+                <td colspan="2">There are no sites defined</td>
+            </tr>
+        <?php endif ?>
+        <?php foreach($this->sites as $site): ?>
+            <tr>
+                <td>&nbsp;</td>
+                <td><a href="sites/edit?id=<?=$site->id?>"><?=$site->url?></a></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
