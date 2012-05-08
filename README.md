@@ -19,4 +19,5 @@ Roadmap:
 * List connected sites with their status
 * Show if there are updates available and link to the updates
 
-This roadmap is still an approach to a very simple application. Future plans can be added at a later stage.
+This roadmap is still an approach to a very simple application. 
+Future plans can be added at a later stage or added to the issues on github.
