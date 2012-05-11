@@ -14,7 +14,7 @@ Roadmap:
 * ~~Setup an application~~
 * ~~Open or create a database connection~~
 * ~~Create user login~~
-* CRUD Wordpress site accesses
+* ~~CRUD Wordpress site accesses~~
 * Connect to Wordpress sites
 * List connected sites with their status
 * Show if there are updates available and link to the updates

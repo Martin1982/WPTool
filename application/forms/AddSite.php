@@ -33,6 +33,10 @@ class Application_Form_AddSite extends Zend_Form
             'label'      => 'Password:',
         ));
 
+        $this->addElement('hidden', 'siteid', array(
+            'filters'    => array('Int')
+        ));
+
         $this->addElement('submit', 'save', array(
             'required' => false,
             'ignore'   => true,
