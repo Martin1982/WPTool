@@ -4,3 +4,31 @@ footer {
     font-size: 10px;
     text-align: center;
 }
+body {
+    font-family: Arial;
+}
+
+h1 {
+    font-size: 1.3em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+h3 {
+    font-size: 1.1em;
+}
+
+.plugin {
+    font-size: 0.8em;
+    border-top: 1px solid black;
+    text-align: center;
+}
+
+#header ul li
+{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}

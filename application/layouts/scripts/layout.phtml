@@ -5,13 +5,13 @@
         <link rel="stylesheet" href="/resources/css/wptools.css" type="text/css" />
     </head>
     <body>
-        <div id="header"> <div id="logged-in-as">
-            <?php echo $this->loggedInAs(); ?> </div>
+        <div id="header">
+            <div id="logged-in-as"><?php echo $this->loggedInAs(); ?></div>
         </div>
         <h1>WPTool</h1>
         <h2>Manage Wordpress like a boss!</h2>
         <?php echo $this->layout()->content; ?>
-        <p><a href="/resources/wptool.zip">Download Wordpress plugin</a></p>
+        <p class="plugin"><a href="/resources/wptool.zip">Download Wordpress plugin</a></p>
         <footer>WPTool &copy; <?=date('Y')?>, Martin de Keijzer</footer>
     </body>
 </html>
