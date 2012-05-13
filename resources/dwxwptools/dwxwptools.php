@@ -25,24 +25,25 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-function wptools_init()
+function wptool_init()
 {
-    if (!isset($_GET['wptoolsaction'])) {
+    if (!isset($_GET['wptoolaction'])) {
         return true;
     }
 
-    $funcOut = call_user_func('wptools' . $_GET['wptoolsaction']);
+    $funcOut = call_user_func('wptool_' . $_GET['wptoolaction']);
     echo json_encode($funcOut);
+    die();
 }
 
-function wptools_getupdates()
+function wptool_getupdates()
 {
     return array();
 }
 
-function wptools_version()
+function wptool_version()
 {
     return '0.1';
 }
 
-add_action('plugins_loaded', 'wptools_init');
+add_action('plugins_loaded', 'wptool_init');

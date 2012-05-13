@@ -42,6 +42,7 @@
         <dbTableDirectory>
           <dbTableFile dbTableName="WpSites"/>
         </dbTableDirectory>
+        <modelFile modelName="WpSite"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>

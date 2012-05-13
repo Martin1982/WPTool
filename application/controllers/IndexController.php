@@ -6,6 +6,12 @@ class IndexController extends BaseController
     {
         $auth = Zend_Auth::getInstance();
         $this->view->assign('username',$auth->getIdentity()->username);
+
+        $sitesTable = new Application_Model_DbTable_WpSites();
+        $sites = $sitesTable->fetchAll();
+        foreach ($sites as $site) {
+            $site = new Application_Model_WpSite($site);
+        }
+
     }
 }
-
