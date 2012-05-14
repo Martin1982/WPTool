@@ -12,6 +12,7 @@ class IndexController extends BaseController
         $sitesInfo = array();
         foreach ($sites as $site) {
             $siteModel = new Application_Model_WpSite($site);
+            $siteModel->authenticate();
             $sitesInfo[] = array(
                 'url'               => $site->url,
                 'isConnected'       => $siteModel->isConnected(),

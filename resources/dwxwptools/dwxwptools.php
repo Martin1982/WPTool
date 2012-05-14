@@ -55,7 +55,23 @@ function wptool_handshake()
  */
 function wptool_login()
 {
-    return array('token' => '1234567890');
+    $creds = array();
+    $creds['user_login'] = $_GET['username'];
+    $creds['user_password'] = $_GET['password'];
+    $creds['remember'] = true;
+    $user = wp_signon( $creds, true);
+    if ( is_wp_error($user) ) {
+        $loginInfo = array(
+            'authenticated' => false,
+            'response' => $user->get_error_message()
+        );
+    } else {
+        $loginInfo = array(
+            'authenticated' => true,
+            'response' => $user
+        );
+    }
+    return $loginInfo;
 }
 
 /**
