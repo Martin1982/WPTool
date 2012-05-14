@@ -48,7 +48,7 @@ class SitesController extends BaseController
         $siteId = $this->_getSiteId($this->_request);
         $sitesTable = new Application_Model_DbTable_WpSites();
 
-        $site = $sitesTable->fetchRow(array('id' => $siteId));
+        $site = $sitesTable->fetchRow(array('id = ?' => $siteId));
         $form->getElement('url')->setValue($site->url);
         $form->getElement('username')->setValue($site->username);
         $form->getElement('siteid')->setValue($site->id);

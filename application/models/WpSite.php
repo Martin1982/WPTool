@@ -20,7 +20,7 @@ class Application_Model_WpSite
         $httpRequest = $httpClient->request();
         if ($httpRequest->isSuccessful()) {
             $response = $httpClient->getLastResponse();
-            Zend_Debug::dump($response->getBody());
+            $responseContent = json_decode($response->getBody());
         }
     }
 }
