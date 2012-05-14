@@ -1,1 +1,22 @@
 <h3>Welcome <?=$this->username?>,</h3>
+
+<p>Below you can directly access the information about your saved sites.</p>
+
+<table>
+    <thead>
+        <tr>
+            <td>URL</td>
+            <td>Handshake</td>
+            <td>Login</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->sites as $site): ?>
+            <tr>
+                <td><?=$site['url']?></td>
+                <td><?=$site['isConnected'] ? 'Y' : 'N'?></td>
+                <td><?=$site['isAuthenticated'] ? 'Y' : 'N'?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

@@ -25,7 +25,11 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-function wptool_init()
+/**
+ * Main router for all wptool actions
+ * @return bool
+ */
+function wptoolInit()
 {
     if (!isset($_GET['wptoolaction'])) {
         return true;
@@ -36,14 +40,49 @@ function wptool_init()
     die();
 }
 
+/**
+ * Initial handshake to check wptool presence
+ * @return string
+ */
+function wptool_handshake()
+{
+    return 'wptool present';
+}
+
+/**
+ * Request action for a login token
+ * @return array
+ */
+function wptool_login()
+{
+    return array('token' => '1234567890');
+}
+
+/**
+ * Request the available updates
+ * @return array
+ */
 function wptool_getupdates()
 {
     return array();
 }
 
+/**
+ * Execute the given updates
+ * @return array
+ */
+function wptool_runupdates()
+{
+    return array();
+}
+
+/**
+ * Request the plugin version
+ * @return string
+ */
 function wptool_version()
 {
     return '0.1';
 }
 
-add_action('plugins_loaded', 'wptool_init');
+add_action('plugins_loaded', 'wptoolInit');

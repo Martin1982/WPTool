@@ -9,9 +9,17 @@ class IndexController extends BaseController
 
         $sitesTable = new Application_Model_DbTable_WpSites();
         $sites = $sitesTable->fetchAll();
+        $sitesInfo = array();
         foreach ($sites as $site) {
-            $site = new Application_Model_WpSite($site);
+            $siteModel = new Application_Model_WpSite($site);
+            $sitesInfo[] = array(
+                'url'               => $site->url,
+                'isConnected'       => $siteModel->isConnected(),
+                'isAuthenticated'   => false
+            );
         }
+
+        $this->view->assign('sites', $sitesInfo);
 
     }
 }
