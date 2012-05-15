@@ -18,7 +18,8 @@ Roadmap:
 * ~~Connect to Wordpress sites~~
 * ~~Setup Wordpress plugin~~
 * ~~List connected sites with their status~~
-* Authenticate as an admin
+* ~~Authenticate as an admin~~
+* Persist authentication
 * Show if there are updates available and link to the updates
 * Update from the dashboard
 

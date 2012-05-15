@@ -5,7 +5,8 @@ class Application_Model_WpSite
     protected $_siteInfo;
     protected $_isConnected = false;
     protected $_isAuthenticated = false;
-    protected $_authToken;
+    protected $_userObject;
+    protected $_authError;
 
     public function __construct(Zend_Db_Table_Row $site)
     {
@@ -62,8 +63,17 @@ class Application_Model_WpSite
             return false;
         }
 
-        $response = $httpClient->getLastResponse();
-        Zend_Debug::dump($response->getBody());
+        $responseBody = $httpClient->getLastResponse()->getBody();
+        $responseObj = json_decode($responseBody);
+
+        if ($responseObj->authenticated === true) {
+            $this->_isAuthenticated = true;
+            $this->_userObject = $responseObj->response;
+            return true;
+        }
+
+        $this->_authError = $responseObj->response;
+        return false;
     }
 
     /**
@@ -81,7 +91,16 @@ class Application_Model_WpSite
      */
     public function isAuthenticated()
     {
-        return $this->_isAuthenticated();
+        return $this->_isAuthenticated;
+    }
+
+    /**
+     * Get the authentication error
+     * @return string
+     */
+    public function getAuthError()
+    {
+        return $this->_authError;
     }
 }
 

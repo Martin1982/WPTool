@@ -65,6 +65,11 @@ function wptool_login()
             'authenticated' => false,
             'response' => $user->get_error_message()
         );
+    } elseif (!in_array('administrator', $user->roles)) {
+        $loginInfo = array(
+            'authenticated' => false,
+            'response' => 'Not an administrator'
+        );
     } else {
         $loginInfo = array(
             'authenticated' => true,
