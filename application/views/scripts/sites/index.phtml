@@ -3,8 +3,8 @@
 <table>
     <thead>
         <tr>
-            <td>&nbsp;</td>
             <td>Site URL</td>
+            <td>Actions</td>
         </tr>
     </thead>
     <tbody>
@@ -15,10 +15,8 @@
         <?php endif ?>
         <?php foreach($this->sites as $site): ?>
             <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <a href="sites/edit?siteid=<?=$site->id?>"><?=$site->url?></a> -
-                    <a href="sites/delete?siteid=<?=$site->id?>">[X]</a></td>
+                <td><a href="sites/edit?siteid=<?=$site->id?>"><?=$site->url?></a></td>
+                <td><a href="sites/delete?siteid=<?=$site->id?>">[X]</a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
