@@ -85,7 +85,7 @@ function wptool_login()
  */
 function wptool_getupdates()
 {
-    return array();
+    return wp_get_update_data();
 }
 
 /**

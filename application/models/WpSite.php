@@ -8,6 +8,11 @@ class Application_Model_WpSite
     protected $_userObject;
     protected $_authError;
 
+    /**
+     * Setup the connected site and
+     * do a handshake to confirm it is WPTool compatible
+     * @param Zend_Db_Table_Row $site
+     */
     public function __construct(Zend_Db_Table_Row $site)
     {
         $this->_siteInfo = $site;
@@ -49,6 +54,14 @@ class Application_Model_WpSite
         $username = $this->_siteInfo->username;
         $password = $this->_siteInfo->password;
 
+        $responseObj = Zend_Session::namespaceGet('wpsession');
+
+        if ($responseObj) {
+            $this->_isAuthenticated = true;
+            $this->_userObject = $responseObj;
+            return true;
+        }
+
         $httpClient = new Zend_Http_Client($this->_siteInfo->url);
         $httpClient->setMethod(Zend_Http_Client::GET);
 
@@ -69,11 +82,34 @@ class Application_Model_WpSite
         if ($responseObj->authenticated === true) {
             $this->_isAuthenticated = true;
             $this->_userObject = $responseObj->response;
+            $userSession = new Zend_Session_Namespace('wpsession');
+            $userSession->userObject = $this->_userObject;
             return true;
         }
 
         $this->_authError = $responseObj->response;
         return false;
+    }
+
+    /**
+     * Check the number of updates available for the site
+     * @return string
+     */
+    public function getNumUpdates()
+    {
+        $httpClient = new Zend_Http_Client($this->_siteInfo->url);
+        $httpClient->setMethod(Zend_Http_Client::GET);
+
+        $httpClient->setParameterGet(array(
+            'wptoolaction' => 'getupdates'
+        ));
+
+        $httpRequest = $httpClient->request();
+        if (!$httpRequest->isSuccessful()) {
+            return false;
+        }
+        $responseObj = json_decode($httpClient->getLastResponse()->getBody());
+        return $responseObj->counts->total;
     }
 
     /**

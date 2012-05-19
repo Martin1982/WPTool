@@ -18,11 +18,11 @@ class IndexController extends BaseController
             $sitesInfo[] = array(
                 'url'               => $site->url,
                 'isConnected'       => $siteModel->isConnected(),
-                'isAuthenticated'   => $siteModel->isAuthenticated()
+                'isAuthenticated'   => $siteModel->isAuthenticated(),
+                'numUpdates'        => $siteModel->getNumUpdates()
             );
         }
 
         $this->view->assign('sites', $sitesInfo);
-
     }
 }

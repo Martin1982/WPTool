@@ -8,6 +8,7 @@
             <td>URL</td>
             <td>Handshake</td>
             <td>Login</td>
+            <td>Updates</td>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
                 <td><?=$site['url']?></td>
                 <td><?=$site['isConnected'] ? 'Y' : 'N'?></td>
                 <td><?=$site['isAuthenticated'] ? 'Y' : 'N'?></td>
+                <td><?=$site['numUpdates'] ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
