@@ -19,7 +19,8 @@ class IndexController extends BaseController
                 'url'               => $site->url,
                 'isConnected'       => $siteModel->isConnected(),
                 'isAuthenticated'   => $siteModel->isAuthenticated(),
-                'numUpdates'        => $siteModel->getNumUpdates()
+                'numUpdates'        => ($siteModel->isConnected() && $siteModel->isAuthenticated()) ?
+                                            $siteModel->getNumUpdates() :'N/A'
             );
         }
 

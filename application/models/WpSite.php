@@ -97,6 +97,9 @@ class Application_Model_WpSite
      */
     public function getNumUpdates()
     {
+        if (!$this->isConnected() || !$this->isAuthenticated()) {
+            throw new Exception('No connection or authentication');
+        }
         $httpClient = new Zend_Http_Client($this->_siteInfo->url);
         $httpClient->setMethod(Zend_Http_Client::GET);
 
