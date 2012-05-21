@@ -7,6 +7,7 @@ class Application_Model_WpSite
     protected $_isAuthenticated = false;
     protected $_userObject;
     protected $_authError;
+    protected $_httpClient;
 
     /**
      * Setup the connected site and
@@ -16,6 +17,9 @@ class Application_Model_WpSite
     public function __construct(Zend_Db_Table_Row $site)
     {
         $this->_siteInfo = $site;
+        $this->_httpClient = new Zend_Http_Client($this->_siteInfo->url);
+        $this->_httpClient->setCookieJar();
+        $this->_httpClient->setMethod(Zend_Http_Client::GET);
         $this->handshake();
     }
 
@@ -25,18 +29,15 @@ class Application_Model_WpSite
      */
     public function handshake()
     {
-        $httpClient = new Zend_Http_Client($this->_siteInfo->url);
-        $httpClient->setMethod(Zend_Http_Client::GET);
+        $httpClient = $this->_httpClient;
         $httpClient->setParameterGet(array('wptoolaction' => 'handshake'));
 
         $httpRequest = $httpClient->request();
-
         if (!$httpRequest->isSuccessful()) {
             return false;
         }
 
-        $response = $httpClient->getLastResponse();
-        $responseContent = json_decode($response->getBody());
+        $responseContent = $this->_getJsonResponse();
         if ($responseContent !== 'wptool present') {
             return false;
         }
@@ -54,7 +55,7 @@ class Application_Model_WpSite
         $username = $this->_siteInfo->username;
         $password = $this->_siteInfo->password;
 
-        $responseObj = Zend_Session::namespaceGet('wpsession');
+        $responseObj = false;
 
         if ($responseObj) {
             $this->_isAuthenticated = true;
@@ -62,9 +63,7 @@ class Application_Model_WpSite
             return true;
         }
 
-        $httpClient = new Zend_Http_Client($this->_siteInfo->url);
-        $httpClient->setMethod(Zend_Http_Client::GET);
-
+        $httpClient = $this->_httpClient;
         $httpClient->setParameterGet(array(
             'username' => $username,
             'password' => $password,
@@ -76,14 +75,10 @@ class Application_Model_WpSite
             return false;
         }
 
-        $responseBody = $httpClient->getLastResponse()->getBody();
-        $responseObj = json_decode($responseBody);
-
+        $responseObj = $this->_getJsonResponse();
         if ($responseObj->authenticated === true) {
             $this->_isAuthenticated = true;
             $this->_userObject = $responseObj->response;
-            $userSession = new Zend_Session_Namespace('wpsession');
-            $userSession->userObject = $this->_userObject;
             return true;
         }
 
@@ -100,9 +95,8 @@ class Application_Model_WpSite
         if (!$this->isConnected() || !$this->isAuthenticated()) {
             throw new Exception('No connection or authentication');
         }
-        $httpClient = new Zend_Http_Client($this->_siteInfo->url);
-        $httpClient->setMethod(Zend_Http_Client::GET);
 
+        $httpClient = $this->_httpClient;
         $httpClient->setParameterGet(array(
             'wptoolaction' => 'getupdates'
         ));
@@ -111,7 +105,7 @@ class Application_Model_WpSite
         if (!$httpRequest->isSuccessful()) {
             return false;
         }
-        $responseObj = json_decode($httpClient->getLastResponse()->getBody());
+        $responseObj = $this->_getJsonResponse();
         return $responseObj->counts->total;
     }
 
@@ -140,6 +134,20 @@ class Application_Model_WpSite
     public function getAuthError()
     {
         return $this->_authError;
+    }
+
+    /**
+     * Get the json decoded response from a http request
+     * @return mixed
+     * @throws Exception
+     */
+    protected function _getJsonResponse()
+    {
+        $lastResponse = $this->_httpClient->getLastResponse();
+        if (!$lastResponse) {
+            throw new Exception('No response available');
+        }
+        return json_decode($lastResponse->getBody());
     }
 }
 
