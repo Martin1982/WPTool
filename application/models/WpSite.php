@@ -55,14 +55,6 @@ class Application_Model_WpSite
         $username = $this->_siteInfo->username;
         $password = $this->_siteInfo->password;
 
-        $responseObj = false;
-
-        if ($responseObj) {
-            $this->_isAuthenticated = true;
-            $this->_userObject = $responseObj;
-            return true;
-        }
-
         $httpClient = $this->_httpClient;
         $httpClient->setParameterGet(array(
             'username' => $username,
