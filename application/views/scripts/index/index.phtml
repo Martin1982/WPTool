@@ -14,10 +14,16 @@
     <tbody>
         <?php foreach($this->sites as $site): ?>
             <tr>
-                <td><?=$site['url']?></td>
+                <td><a href="<?=$site['url']?>" target="_blank"><?=$site['url']?></a></td>
                 <td><?=$site['isConnected'] ? 'Y' : 'N'?></td>
                 <td><?=$site['isAuthenticated'] ? 'Y' : 'N'?></td>
-                <td><?=$site['numUpdates'] ?></td>
+                <td>
+                    <?php if($site['numUpdates'] > 0):?>
+                        <a href="/updates"><?=$site['numUpdates'] ?></a>
+                    <?php else: ?>
+                        <?=$site['numUpdates'] ?>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
