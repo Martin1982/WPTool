@@ -17,9 +17,13 @@ class Application_Model_WpSite
     public function __construct(Zend_Db_Table_Row $site)
     {
         $this->_siteInfo = $site;
-        $this->_httpClient = new Zend_Http_Client($this->_siteInfo->url);
+        $this->_httpClient = new Zend_Http_Client($this->_siteInfo->url, array(
+            'timeout' => 60,
+            'useragent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2'
+        ));
         $this->_httpClient->setCookieJar();
         $this->_httpClient->setMethod(Zend_Http_Client::GET);
+
         $this->handshake();
     }
 
@@ -139,6 +143,7 @@ class Application_Model_WpSite
         if (!$lastResponse) {
             throw new Exception('No response available');
         }
+        Zend_Debug::dump($lastResponse);
         return json_decode($lastResponse->getBody());
     }
 }
